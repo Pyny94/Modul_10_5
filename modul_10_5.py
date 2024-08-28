@@ -1,10 +1,11 @@
-import os
+import multiprocessing
 import time
 from multiprocessing import Pool
+import os
 
 def read_info(name):
     all_data = []
-    with open(name, 'r') as file:
+    with open(name, 'a+') as file:
         line = file.readline()
         while line:
             all_data.append(line)
@@ -23,7 +24,7 @@ if __name__ == '__main__':
 
     # Многопроцессный вызов
     start_time = time.time()
-    with Pool() as pool:
+    with multiprocessing.Pool(processes=4) as pool:
         pool.map(read_info, filenames)
     multiprocess_time = time.time() - start_time
     print(f'Многопроцессный вызов: {multiprocess_time}')
